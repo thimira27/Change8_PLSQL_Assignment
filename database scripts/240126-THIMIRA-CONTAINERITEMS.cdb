@@ -1,0 +1,6 @@
+CREATE TABLE thimira_containerItems_tab(
+    container_id NUMBER,
+    item_id NUMBER,
+    status VARCHAR2(20) NOT NULL,
+    PRIMARY KEY(container_id, item_id)
+);
