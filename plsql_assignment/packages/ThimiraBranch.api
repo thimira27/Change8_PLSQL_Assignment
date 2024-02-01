@@ -19,6 +19,10 @@ CREATE OR REPLACE PACKAGE THIMIRA_BRANCH_API AS
   -- delete_branch
   PROCEDURE delete_branch(branch_id_ IN NUMBER, company_id_ IN NUMBER);
 
+  -- Get inventory information from branch
+  PROCEDURE get_curr_inventory(branch_id_ IN NUMBER);
+
+
   -- function to get branch_name
   FUNCTION get_branch_name(branch_id_ IN NUMBER, company_id_ IN NUMBER)
     RETURN VARCHAR2;
@@ -36,8 +40,7 @@ CREATE OR REPLACE PACKAGE THIMIRA_BRANCH_API AS
     RETURN NUMBER;
 
   -- function to get remaining_capacity
-  FUNCTION get_remaining_capacity(branch_id_  IN NUMBER,
-                                  company_id_ IN NUMBER) RETURN NUMBER;
+  FUNCTION get_remaining_capacity(branch_id_  IN NUMBER) RETURN NUMBER;
 
 END THIMIRA_BRANCH_API;
 /

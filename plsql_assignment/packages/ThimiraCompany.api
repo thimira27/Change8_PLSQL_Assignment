@@ -15,6 +15,8 @@ CREATE OR REPLACE PACKAGE THIMIRA_COMPANY_API AS
   -- delete_company
   PROCEDURE delete_company(company_id_ IN NUMBER);
 
+
+
   -- function to get company_reg_no
   FUNCTION get_company_reg_no(company_id_ IN NUMBER) RETURN VARCHAR2;
 

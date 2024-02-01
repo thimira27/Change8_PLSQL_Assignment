@@ -50,6 +50,31 @@ CREATE OR REPLACE PACKAGE BODY THIMIRA_BRANCH_API AS
      WHERE branch_id = branch_id_ AND company_id = company_id_;
   END delete_branch;
 
+  -- Get inventory information from branch
+  PROCEDURE get_curr_inventory(branch_id_ IN NUMBER) IS
+    CURSOR names_array IS
+      SELECT item_name , available_qty
+      FROM thimira_foodItem_tab
+      WHERE item_id IN (
+        SELECT item_id
+        FROM thimira_containerItems_tab
+        WHERE container_id IN (
+          SELECT container_id
+          FROM thimira_container_tab
+          WHERE branch_id = branch_id_ AND status = 'Stored' 
+        )
+      );
+
+  BEGIN
+    FOR name IN names_array LOOP
+      -- Use dbms_output.put_line to print the result
+      dbms_output.put_line(name.item_name || ' - ' || name.available_qty || 'kg');
+      --dbms_output.put_line(name.available_qty);
+    END LOOP;
+  END get_curr_inventory;
+
+
+
   -- function to get branch_name
   FUNCTION get_branch_name(branch_id_ IN NUMBER, company_id_ IN NUMBER)
     RETURN VARCHAR2 IS
@@ -131,35 +156,33 @@ CREATE OR REPLACE PACKAGE BODY THIMIRA_BRANCH_API AS
   END get_total_capacity;
 
   -- function to get remaining_capacity
-  FUNCTION get_remaining_capacity(branch_id_  IN NUMBER,
-                                  company_id_ IN NUMBER) RETURN NUMBER IS
-    total_capacity_     NUMBER;
-    occupied_capacity_  NUMBER;
-    remaining_capacity_ NUMBER;
+  FUNCTION get_remaining_capacity(branch_id_  IN NUMBER) RETURN NUMBER IS
+  result_ NUMBER;
   
-    CURSOR occupied_capacity_cursor IS
-      SELECT COUNT(*)
-        FROM thimira_container_tab
-       WHERE branch_id = branch_id_;
-  
+    CURSOR capacity_cursor IS
+      SELECT (
+         (SELECT total_capacity
+          FROM thimira_branch_tab
+          WHERE branch_id = 5) -
+         (SELECT NVL(SUM(max_volume), 0)
+          FROM thimira_container_tab
+          WHERE container_id IN (SELECT container_id
+                                 FROM thimira_containerItems_tab
+                                 WHERE status = 'Stored'))
+       ) AS remaining_volume
+      FROM DUAL;
   BEGIN
-    -- Use existing function to get total capacity of the branch
-    total_capacity_ := get_total_capacity(branch_id_, company_id_);
-  
     -- Declare a cursor to fetch the count of containers in the branch
-    OPEN occupied_capacity_cursor;
-    FETCH occupied_capacity_cursor
-      INTO occupied_capacity_;
-    CLOSE occupied_capacity_cursor;
-  
-    -- Calculate remaining capacity
-    remaining_capacity_ := total_capacity_ - occupied_capacity_;
-  
-    RETURN remaining_capacity_;
+    OPEN capacity_cursor;
+    FETCH capacity_cursor
+      INTO result_;
+    CLOSE capacity_cursor;
+    RETURN result_;
   EXCEPTION
     WHEN NO_DATA_FOUND THEN
       RETURN NULL;
   END get_remaining_capacity;
+
 
 END THIMIRA_BRANCH_API;
 /
