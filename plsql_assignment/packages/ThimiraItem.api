@@ -1,5 +1,5 @@
 -- package Specification
-CREATE OR REPLACE PACKAGE THIMIRA_FOODITEM_API AS
+CREATE OR REPLACE PACKAGE THIMIRA_ITEM_API AS
 
   -- create_foodItem
   PROCEDURE insert_data(item_name_     IN VARCHAR2,
@@ -29,5 +29,5 @@ CREATE OR REPLACE PACKAGE THIMIRA_FOODITEM_API AS
   -- function to get reserved_qty
   FUNCTION get_reserved_qty(item_id_ IN NUMBER) RETURN NUMBER;
 
-END THIMIRA_FOODITEM_API;
+END THIMIRA_ITEM_API;
 /

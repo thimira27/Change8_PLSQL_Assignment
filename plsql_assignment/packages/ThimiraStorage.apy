@@ -1,7 +1,7 @@
 --package body
-CREATE OR REPLACE PACKAGE BODY THIMIRA_CONTAINERITEMS_API AS
+CREATE OR REPLACE PACKAGE BODY THIMIRA_STORAGE_API AS
 
-  -- create_containerItems
+  -- create_storage
   PROCEDURE insert_data(container_id_ IN NUMBER,
                         item_id_      IN NUMBER,
                         status_       IN VARCHAR2) IS
@@ -12,8 +12,8 @@ CREATE OR REPLACE PACKAGE BODY THIMIRA_CONTAINERITEMS_API AS
       (container_id_, item_id_, status_);
   END insert_data;
 
-  -- update_containerItems
-  PROCEDURE update_containerItems(container_id_ IN NUMBER,
+  -- update_storage
+  PROCEDURE update_storage(container_id_ IN NUMBER,
                                   item_id_      IN NUMBER,
                                   status_       IN VARCHAR2) IS
   
@@ -21,15 +21,15 @@ CREATE OR REPLACE PACKAGE BODY THIMIRA_CONTAINERITEMS_API AS
     UPDATE thimira_containerItems_tab
        SET status = status_
      WHERE container_id = container_id_ AND item_id = item_id_;
-  END update_containerItems;
+  END update_storage;
 
-  -- delete_containerItems
-  PROCEDURE delete_containerItems(container_id_ IN NUMBER,
+  -- delete_storage
+  PROCEDURE delete_storage(container_id_ IN NUMBER,
                                   item_id_      IN NUMBER) IS
   BEGIN
     DELETE FROM thimira_containerItems_tab
      WHERE container_id = container_id_ AND item_id = item_id_;
-  END delete_containerItems;
+  END delete_storage;
 
   -- function to get status
   FUNCTION get_status(container_id_ IN NUMBER, item_id_ IN NUMBER)
@@ -51,5 +51,5 @@ CREATE OR REPLACE PACKAGE BODY THIMIRA_CONTAINERITEMS_API AS
   
   END get_status;
 
-END THIMIRA_CONTAINERITEMS_API;
+END THIMIRA_STORAGE_API;
 /

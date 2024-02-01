@@ -1,23 +1,23 @@
 --package specification
-CREATE OR REPLACE PACKAGE THIMIRA_CONTAINERITEMS_API AS
+CREATE OR REPLACE PACKAGE THIMIRA_STORAGE_API AS
 
-  -- create_containerItems
+  -- create_storage
   PROCEDURE insert_data(container_id_ IN NUMBER,
                         item_id_      IN NUMBER,
                         status_       IN VARCHAR2);
 
-  -- update_containerItems
-  PROCEDURE update_containerItems(container_id_ IN NUMBER,
+  -- update_storage
+  PROCEDURE update_storage(container_id_ IN NUMBER,
                                   item_id_      IN NUMBER,
                                   status_       IN VARCHAR2);
 
-  -- delete_containerItems
-  PROCEDURE delete_containerItems(container_id_ IN NUMBER,
+  -- delete_storage
+  PROCEDURE delete_storage(container_id_ IN NUMBER,
                                   item_id_      IN NUMBER);
 
   -- function to get status
   FUNCTION get_status(container_id_ IN NUMBER, item_id_ IN NUMBER)
     RETURN VARCHAR2;
 
-END THIMIRA_CONTAINERITEMS_API;
+END THIMIRA_STORAGE_API;
 /
