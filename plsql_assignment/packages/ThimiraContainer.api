@@ -1,0 +1,39 @@
+--package specification
+CREATE OR REPLACE PACKAGE THIMIRA_CONTAINER_API AS
+
+  -- create container
+  PROCEDURE insert_data(max_weight_     IN NUMBER,
+                        current_weight_ IN NUMBER,
+                        max_volume_     IN NUMBER,
+                        current_volume_ IN NUMBER,
+                        branch_id_      IN NUMBER);
+
+  -- update container
+  PROCEDURE update_container(container_id_   IN NUMBER,
+                             max_weight_     IN NUMBER,
+                             current_weight_ IN NUMBER,
+                             max_volume_     IN NUMBER,
+                             current_volume_ IN NUMBER,
+                             branch_id_      IN NUMBER);
+
+  -- delete container
+  PROCEDURE delete_container(container_id_ IN NUMBER);
+
+  -- function to get max_weight
+  FUNCTION get_max_weight(branch_id_ IN NUMBER, container_id_ IN NUMBER)
+    RETURN NUMBER;
+
+  -- function to get current_weight
+  FUNCTION get_current_weight(branch_id_    IN NUMBER,
+                              container_id_ IN NUMBER) RETURN NUMBER;
+
+  -- function to get max_volume
+  FUNCTION get_max_volume(branch_id_ IN NUMBER, container_id_ IN NUMBER)
+    RETURN NUMBER;
+
+  -- function to get current_volume
+  FUNCTION get_current_volume(branch_id_    IN NUMBER,
+                              container_id_ IN NUMBER) RETURN NUMBER;
+
+END THIMIRA_CONTAINER_API;
+/

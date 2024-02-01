@@ -1,0 +1,55 @@
+--package body
+CREATE OR REPLACE PACKAGE BODY THIMIRA_CONTAINERITEMS_API AS
+
+  -- create_containerItems
+  PROCEDURE insert_data(container_id_ IN NUMBER,
+                        item_id_      IN NUMBER,
+                        status_       IN VARCHAR2) IS
+  BEGIN
+    INSERT INTO thimira_containerItems_tab
+      (container_id, item_id, status)
+    VALUES
+      (container_id_, item_id_, status_);
+  END insert_data;
+
+  -- update_containerItems
+  PROCEDURE update_containerItems(container_id_ IN NUMBER,
+                                  item_id_      IN NUMBER,
+                                  status_       IN VARCHAR2) IS
+  
+  BEGIN
+    UPDATE thimira_containerItems_tab
+       SET status = status_
+     WHERE container_id = container_id_ AND item_id = item_id_;
+  END update_containerItems;
+
+  -- delete_containerItems
+  PROCEDURE delete_containerItems(container_id_ IN NUMBER,
+                                  item_id_      IN NUMBER) IS
+  BEGIN
+    DELETE FROM thimira_containerItems_tab
+     WHERE container_id = container_id_ AND item_id = item_id_;
+  END delete_containerItems;
+
+  -- function to get status
+  FUNCTION get_status(container_id_ IN NUMBER, item_id_ IN NUMBER)
+    RETURN VARCHAR2 IS
+    result_ VARCHAR2(20);
+  
+    CURSOR get_status IS
+      SELECT status
+        FROM thimira_containerItems_tab
+       WHERE container_id = container_id_ AND item_id = item_id_;
+  
+  BEGIN
+    OPEN get_status;
+    FETCH get_status
+      INTO result_;
+    CLOSE get_status;
+  
+    RETURN result_;
+  
+  END get_status;
+
+END THIMIRA_CONTAINERITEMS_API;
+/

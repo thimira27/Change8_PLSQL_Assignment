@@ -1,0 +1,43 @@
+--package specification
+CREATE OR REPLACE PACKAGE THIMIRA_BRANCH_API AS
+
+  -- create_branch
+  PROCEDURE insert_data(branch_name_    IN VARCHAR2,
+                        branch_address_ IN VARCHAR2,
+                        branch_manager_ IN VARCHAR2,
+                        total_capacity_ IN NUMBER,
+                        company_id_     IN NUMBER);
+
+  -- update_branch
+  PROCEDURE update_branch(branch_id_      IN NUMBER,
+                          branch_name_    IN VARCHAR2,
+                          branch_address_ IN VARCHAR2,
+                          branch_manager_ IN VARCHAR2,
+                          total_capacity_ IN NUMBER,
+                          company_id_     IN NUMBER);
+
+  -- delete_branch
+  PROCEDURE delete_branch(branch_id_ IN NUMBER, company_id_ IN NUMBER);
+
+  -- function to get branch_name
+  FUNCTION get_branch_name(branch_id_ IN NUMBER, company_id_ IN NUMBER)
+    RETURN VARCHAR2;
+
+  -- function to get branch_address
+  FUNCTION get_branch_address(branch_id_ IN NUMBER, company_id_ IN NUMBER)
+    RETURN VARCHAR2;
+
+  -- function to get branch_manager
+  FUNCTION get_branch_manager(branch_id_ IN NUMBER, company_id_ IN NUMBER)
+    RETURN VARCHAR2;
+
+  -- function to get total_capacity
+  FUNCTION get_total_capacity(branch_id_ IN NUMBER, company_id_ IN NUMBER)
+    RETURN NUMBER;
+
+  -- function to get remaining_capacity
+  FUNCTION get_remaining_capacity(branch_id_  IN NUMBER,
+                                  company_id_ IN NUMBER) RETURN NUMBER;
+
+END THIMIRA_BRANCH_API;
+/
