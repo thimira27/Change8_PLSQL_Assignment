@@ -1,0 +1,9 @@
+CREATE OR REPLACE VIEW branch_food_item_qty_view AS
+SELECT s.branch_id,
+       f.item_name,
+       SUM(f.available_qty) AS available_qty,
+       SUM(f.scrapped_qty) AS scrapped_qty,
+       SUM(f.reserved_qty) AS reserved_qty
+FROM thimira_containerItems_tab s
+JOIN thimira_foodItem_tab f ON s.item_id = f.item_id
+GROUP BY s.branch_id, f.item_name;
